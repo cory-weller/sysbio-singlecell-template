@@ -3,7 +3,6 @@
 ####################################################################################################
 data_dir: 'DATA'
 scratch: /lscratch                  # Temporary directory for HPC jobs
-conda_source: myconda               # e.g. when running "source myconda" before activating conda environments
 metadata:
     sample_libraries: AMP-AD_DiverseCohorts_assay_multiome_metadata.csv
 
@@ -17,8 +16,6 @@ synapse:
         - syn53643818   # fastqs folder
     token: ~/.synapsetoken                      # Location of synapse authentication token
     metadata_summary: 'synapse-file-metadata.tsv'
-    clobber: False
-    conda_env: sysbio_singlecell
     modules: None
     
 
@@ -43,22 +40,4 @@ cellranger:
 cellbender:
     clobber: False
     rerun_debug: False      # VR001-GEX
-
-
-# ####################################################################################################
-# # 04 - Demultiplex parameters
-# ####################################################################################################
-# freemuxlet:
-#     clobber: False
-#     rerun_debug: False
-#     slurm:
-#         modules:
-#             - 
-#         array_limit: 50
-#         mem: 32G
-#         cpus: 1
-#         walltime: '3:00:00'
-#         ntasks: 1
-#         gres:
-#             lscratch: 50    # GB requested in local scratch
 
