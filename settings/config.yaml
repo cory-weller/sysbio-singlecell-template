@@ -1,0 +1,64 @@
+####################################################################################################
+# Project-wide parameters
+####################################################################################################
+data_dir: 'DATA'
+scratch: /lscratch                  # Temporary directory for HPC jobs
+conda_source: myconda               # e.g. when running "source myconda" before activating conda environments
+metadata:
+    sample_libraries: AMP-AD_DiverseCohorts_assay_multiome_metadata.csv
+
+####################################################################################################
+# 01 and 02 - Synapse metadata + data retrieval
+####################################################################################################
+synapse:
+    clobber: False                  # for metadata retrieval or actual file download
+    datasets:
+        - syn51753257   # metadata folder
+        - syn53643818   # fastqs folder
+    token: ~/.synapsetoken                      # Location of synapse authentication token
+    metadata_summary: 'synapse-file-metadata.tsv'
+    clobber: False
+    conda_env: sysbio_singlecell
+    modules: None
+    
+
+
+####################################################################################################
+# 03 - Cellranger parameters
+####################################################################################################
+cellranger:
+    clobber: False
+    rerun_debug:  False            # force any single sample to be reran by itself, ignoring all other samples
+    tool: count
+    assay: Gene Expression
+    transcriptome: /fdb/cellranger/refdata-gex-GRCh38-2024-A
+    chemistry: ARC-v1
+    create_bam: True
+
+
+
+####################################################################################################
+# 04 - Cellbender parameters
+####################################################################################################
+cellbender:
+    clobber: False
+    rerun_debug: False      # VR001-GEX
+
+
+# ####################################################################################################
+# # 04 - Demultiplex parameters
+# ####################################################################################################
+# freemuxlet:
+#     clobber: False
+#     rerun_debug: False
+#     slurm:
+#         modules:
+#             - 
+#         array_limit: 50
+#         mem: 32G
+#         cpus: 1
+#         walltime: '3:00:00'
+#         ntasks: 1
+#         gres:
+#             lscratch: 50    # GB requested in local scratch
+

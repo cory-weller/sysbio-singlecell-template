@@ -1,0 +1,55 @@
+executor: slurm
+use-envmodules: true
+use-conda: true
+jobs: 200
+local-cores: 1
+latency-wait: 120
+printshellcmds: true
+rerun-incomplete: true
+keep-going: true
+restart-times: 0
+max-jobs-per-second: 1
+max-status-checks-per-second: 0.1
+slurm-keep-successful-logs: true 
+verbose: true
+use-singularity: true
+
+rerun-triggers:
+    - mtime
+    #- params               # if parameters change
+    #- input                # if input name changes
+    #- software-env         # If conda env changes
+    #- code                 # if script or shell section changes
+
+
+#---------------------------------------------------------------------------------------------------
+# DEFAULT RESOURCES
+#---------------------------------------------------------------------------------------------------
+
+default-resources:
+    slurm_partition: norm
+    slurm_account: cookson
+    runtime: 3h
+    tasks: 1
+    cpus_per_task: 1
+    mem_mb: 8000
+    gres: 'lscratch:20'
+
+#---------------------------------------------------------------------------------------------------
+# RULE-SPECIFIC RESOURCES. These will override any of the above defaults in a given job.
+#---------------------------------------------------------------------------------------------------
+
+set-resources:
+    run_cellranger:
+        runtime: 16h
+        cpus_per_task: 12
+        tasks: 1
+        mem_mb: 40000
+        gres: 'lscratch:500'
+    run_cellbender:
+        slurm_partition: gpu
+        runtime: 8h
+        cpus_per_task: 2
+        tasks: 1
+        mem_mb: 32000
+        gres: gpu:a100:1
